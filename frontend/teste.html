@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste</title>
+</head>
+<body>
+    <h1>Teste de Recarregamento</h1>
+    <input type="text" id="input" placeholder="Digite algo">
+    <button id="btn">Clicar - Não deve recarregar</button>
+    <div id="resultado"></div>
+
+    <script>
+        const btn = document.getElementById('btn');
+        const input = document.getElementById('input');
+        const resultado = document.getElementById('resultado');
+        
+        btn.onclick = function() {
+            resultado.innerHTML = 'Você clicou em: ' + input.value;
+            console.log('Clicou!');
+            return false;
+        };
+    </script>
+</body>
+</html>

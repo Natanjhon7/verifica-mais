@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: verifica-mais
+    runtime: python
+    repo: https://github.com/Natanjhon7/verifica-mais
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
