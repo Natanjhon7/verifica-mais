@@ -1,0 +1,36 @@
+text,rating,source,publisher,date
+Lula foi condenado pela Lava Jato em primeira instância,Verdadeiro,,,
+As urnas eletrônicas foram fraudadas em 2022,Falso,,,
+Bolsonaro venceu as eleições de 2022,Falso,,,
+O voto impresso é mais seguro que a urna eletrônica,Enganoso,,,
+Não houve provas de fraude nas urnas em 2022,Verdadeiro,,,
+O Brasil tem 27 estados,Verdadeiro,,,
+O PT fraudou todas as eleições que venceu,Falso,,,
+A urna eletrônica é auditável e segura,Verdadeiro,,,
+As pesquisas eleitorais sempre erram,Enganoso,,,
+Lula destruiu a economia brasileira,Falso,,,
+Bolsonaro foi o pior presidente da história,Enganoso,,,
+O TSE é um órgão confiável,Verdadeiro,,,
+Voto impresso acabaria com todas as fraudes,Enganoso,,,
+Lula é inocente em todos os processos,Enganoso,,,
+O sistema eleitoral brasileiro é fraudulento,Falso,,,
+Lula foi preso pela Lava Jato,Verdadeiro,ml,ML_Model,2026-05-23 15:49:17
+Bolsonaro venceu as eleições de 2022,Falso,ml,ML_Model,2026-05-23 15:49:26
+urnas eletrônicas foram fraudadas em 2022,Falso,ml,ML_Model,2026-05-23 15:49:46
+urnas eletrônicas foram fraudadas em 2022,Falso,ml,ML_Model,2026-05-23 15:50:02
+Bolsonaro venceu as eleições de 2022,Falso,ml,ML_Model,2026-05-23 15:53:25
+urnas eletrônicas foram fraudadas em 2022,Falso,ml,ML_Model,2026-05-23 15:53:41
+Lula foi preso pela Lava Jato,Verdadeiro,ml,ML_Model,2026-05-23 15:58:04
+Lula foi preso pela Lava Jato,Verdadeiro,ml,ML_Model,2026-05-23 15:59:01
+Bolsonaro venceu as eleições de 2022,Falso,ml,ML_Model,2026-05-23 16:01:01
+Lula foi preso pela Lava Jato,Verdadeiro,ml,ML_Model,2026-05-23 16:02:44
+Bolsonaro venceu as eleições de 2022,Falso,ml,ML_Model,2026-05-23 16:06:26
+urnas eletrônicas foram fraudadas em 2022,Falso,ml,ML_Model,2026-05-23 16:06:36
+Lula foi preso pela Lava Jato,Verdadeiro,ml,ML_Model,2026-05-23 16:06:40
+Bolsonaro venceu as eleições de 2022,Falso,ml,ML_Model,2026-05-23 16:06:46
+O voto impresso é mais seguro,Indeterminado,ml,ML_Model,2026-05-23 16:06:52
+bolsonaro sera candidato em 2026?,Falso,ml,ML_Model,2026-05-23 16:07:21
+lula é o atual presidente?,Verdadeiro,ml,ML_Model,2026-05-23 16:07:44
+lula é o presidente do brasil?,Verdadeiro,ml,ML_Model,2026-05-23 16:08:02
+as eleiçoes sera em 2027?,Falso,ml,ML_Model,2026-05-23 16:09:42
+As urnas eletrônicas foram fraudadas em 2022,Falso,ml,ML_Model,2026-05-23 16:21:48

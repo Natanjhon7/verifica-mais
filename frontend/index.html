@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmo Ético - Verificador de Fatos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Open Sans', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        /* Header com estilo governo */
+        .gov-header {
+            background: linear-gradient(135deg, #002776 0%, #008000 100%);
+            color: white;
+            padding: 20px;
+            border-bottom: 4px solid #FFCC00;
+        }
+
+        .gov-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brasao {
+            font-size: 48px;
+            background: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .logo-text h1 {
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .gov-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Navegação */
+        .gov-nav {
+            background: #002776;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 0;
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links li a:hover {
+            border-bottom: 2px solid #FFCC00;
+            color: #FFCC00;
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Card principal */
+        .gov-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px 25px;
+            border-bottom: 3px solid #FFCC00;
+        }
+
+        .card-header h2 {
+            color: #002776;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        /* Input area */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #008000;
+            box-shadow: 0 0 0 3px rgba(0,128,0,0.1);
+        }
+
+        /* Botão estilo governo */
+        .btn-gov {
+            background: linear-gradient(135deg, #008000 0%, #002776 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-gov:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,128,0,0.3);
+        }
+
+        .btn-gov:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Botões secundários */
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #002776;
+            border: 1px solid #dee2e6;
+            padding: 8px 15px;
+            font-size: 13px;
+            width: auto;
+            margin: 5px;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: none;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #008000;
+            border-right: 4px solid #FFCC00;
+            border-bottom: 4px solid #002776;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Resultado */
+        .result {
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 25px;
+            overflow: hidden;
+        }
+
+        .result-header {
+            padding: 15px 20px;
+            background: #e9ecef;
+            border-left: 4px solid;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-body {
+            padding: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .badge-verdadeiro {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge-falso {
+            background: #dc3545;
+            color: white;
+        }
+
+        .badge-indeterminado {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .claim-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #008000;
+            font-style: italic;
+        }
+
+        .info-row {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .disclaimer {
+            font-size: 11px;
+            color: #6c757d;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #dee2e6;
+            text-align: center;
+        }
+
+        /* Exemplos */
+        .examples-section {
+            margin-top: 25px;
+        }
+
+        .examples-title {
+            color: #002776;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        .gov-footer {
+            background: #002776;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            border-top: 3px solid #FFCC00;
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin: 5px 0;
+            font-size: 12px;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            color: #FFCC00;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 12px;
+        }
+
+        /* Utilitários */
+        .hidden {
+            display: none !important;
+        }
+
+        hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header estilo Governo -->
+    <header class="gov-header">
+        <div class="gov-container">
+            <div class="logo-area">
+                <div class="brasao">🇧🇷</div>
+                <div class="logo-text">
+                    <h1>ALGORITMO ÉTICO</h1>
+                    <p>Verificador de Fatos</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Conteúdo principal -->
+    <div class="main-content">
+        <div class="gov-card">
+            <div class="card-header">
+                <h2>
+                    <span>🔍</span> 
+                    Consulta de Verificação de Fatos
+                </h2>
+            </div>
+            <div class="card-body">
+                <div class="input-group">
+                    <label>📝 Digite a afirmação para verificar</label>
+                    <textarea id="claimInput" rows="4" placeholder="Ex: As urnas eletrônicas foram fraudadas nas últimas eleições"></textarea>
+                </div>
+
+                <button id="checkBtn" class="btn-gov">
+                    🔍 Verificar Autenticidade
+                </button>
+
+                <!-- Loading -->
+                <div id="loading" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Consultando fontes oficiais e base de dados...</p>
+                </div>
+
+                <!-- Resultado -->
+                <div id="result" class="result hidden">
+                    <div class="result-header" id="resultHeader">
+                        <span id="resultIcon"></span>
+                        <strong id="resultTitle"></strong>
+                    </div>
+                    <div class="result-body">
+                        <div class="info-row">
+                            <strong>📌 Afirmação analisada:</strong>
+                            <div class="claim-box" id="claimText"></div>
+                        </div>
+                        <div class="info-row">
+                            <strong>🏷️ Classificação:</strong>
+                            <span id="rating" class="badge"></span>
+                        </div>
+                        <div class="info-row">
+                            <strong>📡 Fonte da informação:</strong>
+                            <span id="source"></span>
+                        </div>
+                        <div id="publisherInfo" class="info-row"></div>
+                        <div id="confidenceInfo" class="info-row"></div>
+                        <div id="urlLink" class="info-row"></div>
+                        <div id="disclaimer" class="disclaimer"></div>
+                    </div>
+                </div>
+
+                <!-- Exemplos rápidos -->
+                <div class="examples-section">
+                    <div class="examples-title">📋 Exemplos para teste:</div>
+                    <button class="btn-secondary" data-text="As urnas eletrônicas foram fraudadas em 2022">Urnas fraudadas?</button>
+                    <button class="btn-secondary" data-text="Lula foi condenado pela Lava Jato">Lula condenado?</button>
+                    <button class="btn-secondary" data-text="Bolsonaro venceu as eleições de 2022">Bolsonaro vencedor?</button>
+                    <button class="btn-secondary" data-text="O voto impresso é mais seguro que a urna eletrônica">Voto impresso?</button>
+                    <button class="btn-secondary" data-text="Não houve provas de fraude nas eleições de 2022">Fraude nas eleições?</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selos de transparência -->
+        <div style="text-align: center; margin-top: 20px;">
+            <span style="display: inline-block; margin: 0 10px;">Dados verificados</span>
+            <span style="display: inline-block; margin: 0 10px;">Privacidade garantida</span>
+            <span style="display: inline-block; margin: 0 10px;">Baseado em fatos</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="gov-footer">
+        <div class="footer-content">
+            <p>© 2026 - Algoritmo Ético </p>
+            
+    </footer>
+
+    <script>
+        const API_URL = 'http://localhost:5000/check';
+        
+        const claimInput = document.getElementById('claimInput');
+        const checkBtn = document.getElementById('checkBtn');
+        const loading = document.getElementById('loading');
+        const result = document.getElementById('result');
+        const resultHeader = document.getElementById('resultHeader');
+        
+        async function checkClaim() {
+            const claim = claimInput.value.trim();
+            
+            if (!claim) {
+                alert('Por favor, digite uma afirmação para verificar');
+                return;
+            }
+            
+            result.classList.add('hidden');
+            loading.classList.remove('hidden');
+            checkBtn.disabled = true;
+            checkBtn.textContent = '⏳ Verificando...';
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ claim: claim })
+                });
+                
+                const data = await response.json();
+                displayResult(data);
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showError(claim, error.message);
+            } finally {
+                loading.classList.add('hidden');
+                checkBtn.disabled = false;
+                checkBtn.textContent = '🔍 Verificar Autenticidade';
+            }
+        }
+        
+        function displayResult(data) {
+            const ratingSpan = document.getElementById('rating');
+            const claimText = document.getElementById('claimText');
+            const sourceSpan = document.getElementById('source');
+            const confidenceInfo = document.getElementById('confidenceInfo');
+            const disclaimer = document.getElementById('disclaimer');
+            const urlLink = document.getElementById('urlLink');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const publisherInfo = document.getElementById('publisherInfo');
+            
+            claimText.textContent = data.claim || 'N/A';
+            sourceSpan.textContent = data.source || 'Desconhecido';
+            
+            let rating = data.rating || 'Indeterminado';
+            let badgeClass = 'badge-indeterminado';
+            let icon = '⚠️';
+            let headerColor = '#ffc107';
+            let title = 'Resultado Indeterminado';
+            
+            if (rating.toLowerCase().includes('verdadeiro')) {
+                badgeClass = 'badge-verdadeiro';
+                icon = '✅';
+                headerColor = '#28a745';
+                title = '✓ INFORMAÇÃO VERDADEIRA';
+            } else if (rating.toLowerCase().includes('falso')) {
+                badgeClass = 'badge-falso';
+                icon = '❌';
+                headerColor = '#dc3545';
+                title = '✗ INFORMAÇÃO FALSA';
+            }
+            
+            resultIcon.textContent = icon;
+            resultTitle.textContent = title;
+            ratingSpan.textContent = rating;
+            ratingSpan.className = `badge ${badgeClass}`;
+            resultHeader.style.borderLeftColor = headerColor;
+            
+            if (data.confidence) {
+                confidenceInfo.innerHTML = `<strong>📊 Confiança do modelo:</strong> ${data.confidence}%`;
+                confidenceInfo.classList.remove('hidden');
+            } else {
+                confidenceInfo.classList.add('hidden');
+            }
+            
+            if (data.disclaimer) {
+                disclaimer.textContent = data.disclaimer;
+                disclaimer.classList.remove('hidden');
+            } else {
+                disclaimer.classList.add('hidden');
+            }
+            
+            if (data.url) {
+                urlLink.innerHTML = `<strong>🔗 Fonte original:</strong> <a href="${data.url}" target="_blank" style="color:#008000">Verificar no Google Fact Check</a>`;
+                urlLink.classList.remove('hidden');
+            } else {
+                urlLink.classList.add('hidden');
+            }
+            
+            if (data.publisher) {
+                publisherInfo.innerHTML = `<strong>🏢 Publicado por:</strong> ${data.publisher}`;
+                publisherInfo.classList.remove('hidden');
+            } else {
+                publisherInfo.classList.add('hidden');
+            }
+            
+            result.classList.remove('hidden');
+            result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        function showError(claim, errorMsg) {
+            const claimText = document.getElementById('claimText');
+            const ratingSpan = document.getElementById('rating');
+            const sourceSpan = document.getElementById('source');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            
+            claimText.textContent = claim;
+            ratingSpan.textContent = 'Erro na conexão';
+            ratingSpan.className = 'badge badge-indeterminado';
+            sourceSpan.textContent = 'Servidor offline';
+            resultIcon.textContent = '🔌';
+            resultTitle.textContent = 'Erro de Conexão';
+            resultHeader.style.borderLeftColor = '#ffc107';
+            
+            document.getElementById('confidenceInfo').classList.add('hidden');
+            document.getElementById('disclaimer').classList.remove('hidden');
+            document.getElementById('disclaimer').textContent = '⚠️ Não foi possível conectar ao servidor. Verifique se o backend está rodando em http://localhost:5000';
+            document.getElementById('urlLink').classList.add('hidden');
+            document.getElementById('publisherInfo').classList.add('hidden');
+            
+            result.classList.remove('hidden');
+        }
+        
+        // Eventos
+        checkBtn.onclick = function(e) {
+            e.preventDefault();
+            checkClaim();
+            return false;
+        };
+        
+        document.querySelectorAll('[data-text]').forEach(btn => {
+            btn.onclick = function(e) {
+                e.preventDefault();
+                claimInput.value = this.getAttribute('data-text');
+                claimInput.focus();
+            };
+        });
+        
+        claimInput.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                checkClaim();
+            }
+        });
+        
+        async function testConnection() {
+            try {
+                const response = await fetch('http://localhost:5000/health');
+                if (response.ok) {
+                    console.log('✅ Backend conectado');
+                }
+            } catch (error) {
+                console.warn('⚠️ Backend não está rodando');
+            }
+        }
+        
+        testConnection();
+        console.log('✅ Algoritmo Ético - Sistema pronto!');
+    </script>
+</body>
+</html>
