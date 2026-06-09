@@ -5,7 +5,6 @@ import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 
-# Criar dataset manual
 print('📊 Criando dataset de treinamento...')
 
 dados = [
@@ -26,42 +25,34 @@ dados = [
 
 df = pd.DataFrame(dados, columns=['text', 'rating'])
 
-# Limpeza simples
 df['clean_text'] = df['text'].str.lower()
 df['clean_text'] = df['clean_text'].apply(lambda x: re.sub(r'[^a-z ]', ' ', x))
 
-# Mapear rótulos
 label_map = {'Verdadeiro': 0, 'Falso': 1, 'Enganoso': 2}
 df['label'] = df['rating'].map(label_map)
 
 print(f'✅ Dataset criado com {len(df)} exemplos')
 print(df['rating'].value_counts())
 
-# Vetorização
 print('🔄 Vetorizando textos...')
 vectorizer = TfidfVectorizer(max_features=1000)
 X = vectorizer.fit_transform(df['clean_text'])
 y = df['label']
 
-# Treinar modelo
 print('🤖 Treinando modelo Naive Bayes...')
 model = MultinomialNB()
 model.fit(X, y)
 
-# Avaliar
 y_pred = model.predict(X)
 accuracy = (y_pred == y).mean()
 print(f'✅ Acurácia no treino: {accuracy:.2%}')
 
-# Salvar modelos
 print('💾 Salvando modelos...')
 
-# Salvar na pasta models (fora do backend)
 os.makedirs('../models', exist_ok=True)
 joblib.dump(model, '../models/naive_bayes.pkl')
 joblib.dump(vectorizer, '../models/vectorizer.pkl')
 
-# Salvar também dentro do backend
 os.makedirs('models', exist_ok=True)
 joblib.dump(model, 'models/naive_bayes.pkl')
 joblib.dump(vectorizer, 'models/vectorizer.pkl')

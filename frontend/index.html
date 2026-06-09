@@ -354,7 +354,6 @@
     </style>
 </head>
 <body>
-    <!-- Header estilo Governo -->
     <header class="gov-header">
         <div class="gov-container">
             <div class="logo-area">
@@ -366,7 +365,6 @@
             </div>
         </div>
     </header>
-    <!-- Conteúdo principal -->
     <div class="main-content">
         <div class="gov-card">
             <div class="card-header">
@@ -385,13 +383,13 @@
                     🔍 Verificar Autenticidade
                 </button>
 
-                <!-- Loading -->
+               
                 <div id="loading" class="loading hidden">
                     <div class="spinner"></div>
                     <p>Consultando fontes oficiais e base de dados...</p>
                 </div>
 
-                <!-- Resultado -->
+                
                 <div id="result" class="result hidden">
                     <div class="result-header" id="resultHeader">
                         <span id="resultIcon"></span>
@@ -417,7 +415,6 @@
                     </div>
                 </div>
 
-                <!-- Exemplos rápidos -->
                 <div class="examples-section">
                     <div class="examples-title">📋 Exemplos para teste:</div>
                     <button class="btn-secondary" data-text="As urnas eletrônicas foram fraudadas em 2022">Urnas fraudadas?</button>
@@ -429,7 +426,6 @@
             </div>
         </div>
 
-        <!-- Selos de transparência -->
         <div style="text-align: center; margin-top: 20px;">
             <span style="display: inline-block; margin: 0 10px;">Dados verificados</span>
             <span style="display: inline-block; margin: 0 10px;">Privacidade garantida</span>
@@ -437,7 +433,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="gov-footer">
         <div class="footer-content">
             <p>© 2026 - Algoritmo Ético </p>
@@ -445,7 +440,7 @@
     </footer>
 
     <script>
-        const API_URL = 'http://localhost:5000/check';
+        const API_URL = 'http://localhost:10000/check';
         
         const claimInput = document.getElementById('claimInput');
         const checkBtn = document.getElementById('checkBtn');
@@ -580,7 +575,6 @@
             result.classList.remove('hidden');
         }
         
-        // Eventos
         checkBtn.onclick = function(e) {
             e.preventDefault();
             checkClaim();
@@ -604,7 +598,7 @@
         
         async function testConnection() {
             try {
-                const response = await fetch('http://localhost:5000/health');
+                const response = await fetch('http://localhost:10000/check');
                 if (response.ok) {
                     console.log('✅ Backend conectado');
                 }

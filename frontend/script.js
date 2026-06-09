@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/check';
+const API_URL = 'http://localhost:10000/check';
 
 async function checkClaim() {
     const claimInput = document.getElementById('claimInput');
@@ -13,7 +13,6 @@ async function checkClaim() {
         return;
     }
     
-    // Mostra loading
     const loadingDiv = document.getElementById('loading');
     const resultDiv = document.getElementById('result');
     const checkBtn = document.getElementById('checkBtn');
@@ -106,15 +105,12 @@ function displayResult(data) {
     ratingSpan.textContent = rating;
     ratingSpan.className = `rating-badge ${ratingClass}`;
     
-    // Mostra confiança se for do ML
     if (data.confidence) {
         confidenceInfo.innerHTML = `<strong>Confiança:</strong> ${data.confidence}%`;
         confidenceInfo.classList.remove('hidden');
     } else {
         confidenceInfo.classList.add('hidden');
     }
-    
-    // Mostra disclaimer se for do ML
     if (data.disclaimer) {
         disclaimer.textContent = data.disclaimer;
         disclaimer.classList.remove('hidden');
@@ -122,7 +118,6 @@ function displayResult(data) {
         disclaimer.classList.add('hidden');
     }
     
-    // Mostra URL se existir
     if (data.url) {
         urlLink.innerHTML = `<strong>Fonte:</strong> <a href="${data.url}" target="_blank" style="color: #667eea;">Ver original</a>`;
         urlLink.classList.remove('hidden');
@@ -130,7 +125,6 @@ function displayResult(data) {
         urlLink.classList.add('hidden');
     }
     
-    // Mostra publisher se existir
     if (data.publisher) {
         const publisherInfo = document.getElementById('publisherInfo');
         if (!publisherInfo) {
@@ -144,10 +138,8 @@ function displayResult(data) {
         }
     }
     
-    // Mostra o resultado
     resultDiv.classList.remove('hidden');
     
-    // Scroll suave para o resultado
     resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -157,17 +149,15 @@ function fillExample(text) {
     input.focus();
 }
 
-// Permitir Ctrl+Enter para enviar
 document.getElementById('claimInput').addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
         checkClaim();
     }
 });
 
-// Testar conexão com o backend ao carregar a página
 async function testConnection() {
     try {
-        const response = await fetch('http://localhost:5000/health');
+        const response = await fetch('http://localhost:10000/check');
         if (response.ok) {
             const data = await response.json();
             console.log('✅ Backend conectado:', data);
@@ -180,9 +170,8 @@ async function testConnection() {
     }
 }
 
-// Previne qualquer comportamento de submit
 document.addEventListener('DOMContentLoaded', function() {
-    // Previne submit de qualquer formulário
+  
     const forms = document.getElementsByTagName('form');
     for (let form of forms) {
         form.addEventListener('submit', function(e) {
@@ -191,7 +180,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Garante que o botão não recarrega
     const checkBtn = document.getElementById('checkBtn');
     if (checkBtn) {
         checkBtn.addEventListener('click', function(e) {
@@ -203,7 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ Sistema protegido contra recarregamento');
 });
 
-// Executa o teste de conexão quando a página carregar
 document.addEventListener('DOMContentLoaded', () => {
     testConnection();
     console.log('📱 Página carregada - Verifica+ pronto para uso');
